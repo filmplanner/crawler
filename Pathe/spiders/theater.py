@@ -3,7 +3,7 @@ from Pathe.settings import *
 from Pathe.items import Theater
 
 class TheaterSpider(Spider):
-    name = "theater"
+    name = THEATER_NAME
     start_urls = [BASE_URL]
 
     def parse(self, response):

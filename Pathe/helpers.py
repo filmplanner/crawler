@@ -1,5 +1,5 @@
 import datetime
-
+import json
 
 class DateHelper(object):
     def __init__(self):
@@ -33,3 +33,18 @@ class DateHelper(object):
     @staticmethod
     def add_days(d, amount):
         return d + datetime.timedelta(days=amount)
+
+class DataHelper(object):
+    items = []
+
+    def __init__(self, file):
+        with open(file) as data:
+            self.items = json.load(data)
+    
+    def get(self, element):
+        for item in self.items:
+            yield item[element]
+
+    def to_string(self, obj):
+        return ','.join(obj)
+        

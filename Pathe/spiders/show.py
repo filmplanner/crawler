@@ -1,15 +1,16 @@
 from scrapy import Spider, Request
 from Pathe.settings import *
 from Pathe.items import Movie, Show
-from Pathe.helpers import DateHelper
+from Pathe.helpers import DateHelper, DataHelper
 
 class ShowSpider(Spider):
-    name = "show"
+    name = SHOW_NAME
 
     def start_requests(self):
         url = SHOW_URL
 
-        theater_ids = '1,2,3,4,5,6,7,8,9,10,11,12,13,14,17,18,19,20,22,23,27,28,29,30,31' # TODO: Dynamically get Theater IDS
+        dataHelper = DataHelper(THEATER_FILE)
+        theater_ids = dataHelper.to_string(dataHelper.get('id'))
         date = DateHelper.now()
 
         dateFlag = getattr(self, 'startdate', None)

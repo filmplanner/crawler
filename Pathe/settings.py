@@ -9,9 +9,8 @@ ITEM_PIPELINES = {
 ## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'
 
-SHOW_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
-SHOW_CRAWL_DAY = 3 # Thursday
-SHOW_CRAWL_DAYS = 6 # Thursday -> Wednesday
+THEATER_NAME = 'theater'
+THEATER_FILE = 'theater_items.json'
 
 ## THEATER CSS SELECTORS
 THEATER_SELECTOR = {
@@ -22,6 +21,11 @@ THEATER_SELECTOR = {
     'CITY': '.visual-cinema__city::text',
     'IMAGE': '#js-carousel-home .visual-home__item:first-child img::attr(src)',
 }
+
+SHOW_NAME = 'show'
+SHOW_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
+SHOW_CRAWL_DAY = 3 # Thursday
+SHOW_CRAWL_DAYS = 6 # Thursday -> Wednesday
 
 ## SHOW CSS SELECTORS
 SELECTOR_SHOW = {}
