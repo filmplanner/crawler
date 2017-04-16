@@ -37,8 +37,7 @@ SELECTORS = {
     'MOVIE_THEATER_NAME': 'th::text',
     # Show
     'SHOW_LIST': 'td form',
-    'SHOW_START': 'a span:first-child::text', 
-    'SHOW_END': '',
+    'SHOW_TIMES': '.tooltip p',
     'SHOW_TYPE': 'a span:nth-child(2)::text',
     'SHOW_URL': '::attr(action)',  
 }

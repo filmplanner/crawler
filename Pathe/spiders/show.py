@@ -39,27 +39,27 @@ class ShowSpider(Spider):
                 
                 for showItem in theaterItem.css(SELECTORS['SHOW_LIST']):
                     show = self.parse_show(showItem, date, movie['id'], theater['id'])
+                    self.logger.debug(show)
 
     def parse_movie(self, response):
+        url = response.css(SELECTORS['MOVIE_URL'])
         obj = {
-            'id': '',
+            'id': url.re_first(r'[/]([0-9]{1,})[/]'),
             'title': self.get(response, SELECTORS['MOVIE_TITLE']),
             'description': self.get(response, SELECTORS['MOVIE_DESCRIPTION']), 
             'image': self.get(response, SELECTORS['MOVIE_IMAGE']), 
-            'url': BASE_URL + self.get(response, SELECTORS['MOVIE_URL']),    
-        }
-        
-        # store movie object
+            'url': BASE_URL + url.extract_first(),    
+        }    
         return Movie(obj)
 
     def parse_show(self, response, date, movie_id, theater_id):
+        times = response.css(SELECTORS['SHOW_TIMES']).re(r'[0-9]{1,2}[:][0-9]{2}')
         obj = {
             'date': date, 
             'movie_id': movie_id,
             'theater_id': theater_id,
-            'start': self.get(response, SELECTORS['SHOW_START']), 
-            'end': '',
-            'duration': '',
+            'start': times[0], 
+            'end': times[1],
             'type': self.get(response, SELECTORS['SHOW_TYPE']),
             'url': BASE_URL + self.get(response, SELECTORS['SHOW_URL']),    
         }

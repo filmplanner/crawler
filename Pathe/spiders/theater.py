@@ -18,8 +18,6 @@ class TheaterSpider(Spider):
             'city': self.get(response, SELECTORS['THEATER_CITY']),
             'image': self.get(response, SELECTORS['THEATER_IMAGE']),
         }
-        
-        # store theater object
         return Theater(obj)
 
     def get(self, response, selector):
