@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for PatheScraper project
+# Scrapy settings for Pathe project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'PatheScraper'
+BOT_NAME = 'Pathe'
 
-SPIDER_MODULES = ['PatheScraper.spiders']
-NEWSPIDER_MODULE = 'PatheScraper.spiders'
+SPIDER_MODULES = ['Pathe.spiders']
+NEWSPIDER_MODULE = 'Pathe.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'PatheScraper (+http://www.yourdomain.com)'
+#USER_AGENT = 'Pathe (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'PatheScraper.middlewares.PathescraperSpiderMiddleware': 543,
+#    'Pathe.middlewares.PatheSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'PatheScraper.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'Pathe.middlewares.MyCustomDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'PatheScraper.pipelines.PathescraperPipeline': 300,
+#    'Pathe.pipelines.PathePipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -1,5 +1,5 @@
 import scrapy
-from PatheScraper.items import Theater
+from Pathe.items import Theater
 
 class TheaterSpider(scrapy.Spider):
     name = "theater"
