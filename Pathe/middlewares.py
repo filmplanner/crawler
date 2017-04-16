@@ -1,4 +1,5 @@
 from scrapy import signals
+import shutil
 
 
 class PatheSpiderMiddleware(object):

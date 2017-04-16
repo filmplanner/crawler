@@ -2,7 +2,13 @@ BOT_NAME = 'Pathe'
 SPIDER_MODULES = ['Pathe.spiders']
 NEWSPIDER_MODULE = 'Pathe.spiders'
 ROBOTSTXT_OBEY = True
+#FEED_FORMAT = "json"
+#FEED_URI = 'output/%(name)s.json'
+
+## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'
+SHOW_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
+WD_THURSDAY = 3
 
 ## THEATER CSS SELECTORS
 SELECTOR_THEATER = {
