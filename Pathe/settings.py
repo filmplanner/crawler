@@ -5,6 +5,7 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
     'Pathe.pipelines.JsonExportPipeline': 300,
 }
+LOG_LEVEL = 'DEBUG'
 
 ## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'
@@ -12,10 +13,10 @@ BASE_URL = 'https://www.pathe.nl'
 THEATER_NAME = 'theater'
 THEATER_FILE = 'theater_items.json'
 
-SHOW_NAME = 'show'
-SHOW_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
-SHOW_CRAWL_DAY = 3 # Thursday
-SHOW_CRAWL_DAYS = 6 # Thursday -> Wednesday
+WEEK_NAME = 'week'
+WEEK_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
+WEEK_CRAWL_START = 3 # Thursday
+WEEK_CRAWL_DAYS = 6 # Thursday -> Wednesday
 
 # CSS SELECTORS
 SELECTORS = {
