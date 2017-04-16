@@ -14,7 +14,7 @@ class WeekSpider(Spider):
         theater_ids = self.theaters.to_string(self.theaters.get('id'))
         date = DateHelper.now()
 
-        dateFlag = getattr(self, 'startdate', None)
+        dateFlag = getattr(self, 'start', None)
         if dateFlag is not None: 
             date = DateHelper.strtodate(dateFlag)
             
