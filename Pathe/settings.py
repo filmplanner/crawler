@@ -2,16 +2,19 @@ BOT_NAME = 'Pathe'
 SPIDER_MODULES = ['Pathe.spiders']
 NEWSPIDER_MODULE = 'Pathe.spiders'
 ROBOTSTXT_OBEY = True
-#FEED_FORMAT = "json"
-#FEED_URI = 'output/%(name)s.json'
+ITEM_PIPELINES = {
+    'Pathe.pipelines.JsonExportPipeline': 300,
+}
 
 ## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'
+
 SHOW_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
-WD_THURSDAY = 3
+SHOW_CRAWL_DAY = 3 # Thursday
+SHOW_CRAWL_DAYS = 6 # Thursday -> Wednesday
 
 ## THEATER CSS SELECTORS
-SELECTOR_THEATER = {
+THEATER_SELECTOR = {
     'LIST': '.nav-primary__has-sub.js-main-menu-left:nth-child(2) ul li a[href*="bioscoop/"]',
     'LIST_HREF': '::attr(href)',
     'ID': '.favoritebutton a:first-child::attr(data-cinema)',
@@ -19,3 +22,6 @@ SELECTOR_THEATER = {
     'CITY': '.visual-cinema__city::text',
     'IMAGE': '#js-carousel-home .visual-home__item:first-child img::attr(src)',
 }
+
+## SHOW CSS SELECTORS
+SELECTOR_SHOW = {}

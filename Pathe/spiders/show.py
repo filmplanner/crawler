@@ -16,8 +16,8 @@ class ShowSpider(Spider):
         if dateFlag is not None: 
             date = DateHelper.strtodate(dateFlag)
             
-        start_date = DateHelper.next_weekday(date, WD_THURSDAY)
-        end_date = DateHelper.add_days(start_date, 6)
+        start_date = DateHelper.next_weekday(date, SHOW_CRAWL_DAY)
+        end_date = DateHelper.add_days(start_date, SHOW_CRAWL_DAYS)
 
         for date in DateHelper.daterange(start_date, end_date):
             if date >= DateHelper.now():
@@ -25,7 +25,13 @@ class ShowSpider(Spider):
                 yield Request(fullUrl, self.parse)
 
     def parse(self, response):
-        self.logger.info('test')
+        pass
+
+    def parse_movie(self, response):
+        pass
+
+    def parse_show(self, response):
+        pass
 
     def get(self, response, selector):
         return response.css(selector).extract_first()
