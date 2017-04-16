@@ -12,6 +12,7 @@ class Movie(Item):
     title = Field()
     description = Field()
     image = Field()
+    url = Field()
 
 class Show(Item):
     theater_id = Field()

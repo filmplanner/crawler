@@ -7,20 +7,20 @@ class TheaterSpider(Spider):
     start_urls = [BASE_URL]
 
     def parse(self, response):
-        for items in response.css(THEATER_SELECTOR['LIST']):
-            url = self.get(items, THEATER_SELECTOR['LIST_HREF'])
+        for item in response.css(SELECTORS['THEATER_LIST']):
+            url = self.get(item, SELECTORS['THEATER_HREF'])
             yield Request(url, self.parse_theater)
 
     def parse_theater(self, response):
         obj = {
-            'id': self.get(response, THEATER_SELECTOR['ID']),
-            'name': self.get(response, THEATER_SELECTOR['NAME']),
-            'city': self.get(response, THEATER_SELECTOR['CITY']),
-            'image': self.get(response, THEATER_SELECTOR['IMAGE']),
+            'id': self.get(response, SELECTORS['THEATER_ID']),
+            'name': self.get(response, SELECTORS['THEATER_NAME']),
+            'city': self.get(response, SELECTORS['THEATER_CITY']),
+            'image': self.get(response, SELECTORS['THEATER_IMAGE']),
         }
         
         # store theater object
-        yield Theater(obj)
+        return Theater(obj)
 
     def get(self, response, selector):
         return response.css(selector).extract_first()

@@ -45,6 +45,12 @@ class DataHelper(object):
         for item in self.items:
             yield item[element]
 
+    def search(self, element, search):
+        for item in self.items:
+            if item[element] == search:
+                return item
+        return None
+
     def to_string(self, obj):
         return ','.join(obj)
         
