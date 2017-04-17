@@ -20,7 +20,6 @@ class Show(Item):
     date = Field()
     start = Field()
     end = Field()
-    duration = Field()
     type = Field()
     url = Field()
     
