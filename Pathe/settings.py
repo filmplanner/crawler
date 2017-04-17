@@ -4,6 +4,7 @@ NEWSPIDER_MODULE = 'Pathe.spiders'
 ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
     'Pathe.pipelines.JsonExportPipeline': 300,
+    'Pathe.pipelines.MongoDBPipeline': 301,
 }
 LOG_LEVEL = 'DEBUG'
 

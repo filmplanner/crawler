@@ -18,3 +18,12 @@ class JsonExportPipeline(object):
         if spider.name == THEATER_NAME:
             self.exporter.export_item(item)
             return item
+
+class MongoDBPipeline(object):
+    
+    def open_spider(self, spider):
+        pass
+    def close_spider(self, spider):
+        pass
+    def process_item(self, item, spider):
+        pass
