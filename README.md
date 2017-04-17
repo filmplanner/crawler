@@ -31,7 +31,7 @@ scrapy crawl week -a start=03-04-2017
     title: 'The Dark Knight',   // movie title
     description: 'Den Haag',    // short description of movie
     image: 'http://image.url',  // url of movie image
-    url: 'http://info.url',  // url of Pathé movie info
+    url: 'http://info.url',     // url of Pathé movie info
 }
 
 // Example data set that will be stored in the shows MongoDB collection
@@ -42,7 +42,6 @@ scrapy crawl week -a start=03-04-2017
     start: '16:00',             // start of show
     end: '18:00',               // end of show
     type: 'IMAX',               // type of show
-    url: 'http://ticket.url',   //url of Pathé ticket sale                    
-
+    url: 'http://ticket.url',   // url of Pathé ticket sale                    
 }
 ```

@@ -9,7 +9,8 @@ class WeekSpider(Spider):
 
     def start_requests(self):
         base_url = WEEK_URL
-
+        
+        # TODO: Read theaters from MongoDB instead of file
         self.theaters = DataHelper(THEATER_FILE)
         theater_ids = self.theaters.to_string(self.theaters.get('id'))
         date = DateHelper.now()
@@ -22,6 +23,7 @@ class WeekSpider(Spider):
         end_date = DateHelper.add_days(start_date, WEEK_CRAWL_DAYS)
 
         for date in DateHelper.daterange(start_date, end_date):
+            # TODO: Add condition that checks if week is already scheduled
             if date >= DateHelper.now():
                 url = base_url + theater_ids + '/' + DateHelper.date(date)
                 request = Request(url, self.parse)
