@@ -32,12 +32,14 @@ class WeekSpider(Spider):
         date = response.meta['date']
         for movieItem in response.css(SELECTORS['MOVIE_LIST']):
             movie = self.parse_movie(movieItem)
+            yield movie
 
             for theaterItem in movieItem.css(SELECTORS['MOVIE_THEATER_LIST']):
                 theater = self.theaters.search('name', self.get(theaterItem, SELECTORS['MOVIE_THEATER_NAME']))
 
                 for showItem in theaterItem.css(SELECTORS['SHOW_LIST']):
-                    show = self.parse_show(showItem, date, movie['id'], theater['id'])        
+                    show = self.parse_show(showItem, date, movie['id'], theater['id'])   
+                    yield show     
 
     def parse_movie(self, response):
         url = response.css(SELECTORS['MOVIE_URL'])

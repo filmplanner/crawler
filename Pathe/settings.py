@@ -3,10 +3,19 @@ SPIDER_MODULES = ['Pathe.spiders']
 NEWSPIDER_MODULE = 'Pathe.spiders'
 ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
-    'Pathe.pipelines.JsonExportPipeline': 300,
-    'Pathe.pipelines.MongoDBPipeline': 301,
+    'Pathe.pipelines.JsonExportPipeline': 301,
+    'Pathe.pipelines.MongoDBPipeline': 300,
 }
 LOG_LEVEL = 'DEBUG'
+DOWNLOAD_DELAY = 2
+
+## MONGODB SETTINGS
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "pathe-server"
+MONGODB_COLLECTION_THEATER = "theaters"
+MONGODB_COLLECTION_MOVIE = "movies"
+MONGODB_COLLECTION_SHOW = "shows"
 
 ## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'
