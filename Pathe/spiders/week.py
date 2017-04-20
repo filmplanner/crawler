@@ -9,7 +9,7 @@ class WeekSpider(Spider):
     def start_requests(self):
         base_url = WEEK_URL
         self.db_helper = MongoDBHelper()
-        self.theaters = self.db_helper.get("theaters")
+        self.theaters = self.db_helper.get(MONGODB_COLLECTION_THEATER)
         
         # get spider parameters
         theater_ids = ','.join(self.db_helper.get_attr(self.theaters, 'id'))
@@ -20,13 +20,20 @@ class WeekSpider(Spider):
         if date_flag is not None: 
             date = DateHelper.strtodate(date_flag)
 
-        # get spider date range    
+        # get spider date range
+        date = DateHelper.prev_weekday(date, WEEK_CRAWL_UPDATE)    
         start_date = DateHelper.next_weekday(date, WEEK_CRAWL_START)
         end_date = DateHelper.add_days(start_date, WEEK_CRAWL_DAYS)
 
+        if end_date < DateHelper.now():
+            self.logger.info('Cannot crawl data from the past!')
+            return
+        if date > DateHelper.prev_weekday(DateHelper.now(), WEEK_CRAWL_UPDATE):
+            self.logger.info('This week is not (yet) scheduled by Pathe.nl')
+            return
+            
         # add requests from start to end date
         for date in DateHelper.daterange(start_date, end_date):
-            # TODO: Add condition that checks if week is already scheduled
             if date >= DateHelper.now():
                 url = base_url + theater_ids + '/' + DateHelper.date(date)
                 request = Request(url, self.parse)

@@ -55,10 +55,15 @@ class DateHelper(object):
 
     @staticmethod
     def next_weekday(d, weekday):
-        days_ahead = weekday - d.weekday()
-        if days_ahead <= 0:
-            days_ahead += 7
-        return d + datetime.timedelta(days_ahead + 7)
+        days_diff = weekday - d.weekday()
+        if days_diff <= 0:
+            days_diff += 7
+        return d + datetime.timedelta(days_diff + 7)
+    
+    @staticmethod
+    def prev_weekday(d, weekday):
+        days_diff = weekday - d.weekday()
+        return d - datetime.timedelta(days_diff)
     
     @staticmethod
     def add_days(d, amount):

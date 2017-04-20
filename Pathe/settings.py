@@ -23,6 +23,7 @@ THEATER_NAME = 'theater'
 WEEK_NAME = 'week'
 
 WEEK_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
+WEEK_CRAWL_UPDATE = 1 # Schedule update is on Monday
 WEEK_CRAWL_START = 3 # Thursday
 WEEK_CRAWL_DAYS = 6 # Thursday -> Wednesday
 
