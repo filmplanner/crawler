@@ -45,6 +45,11 @@ class DateHelper(object):
         return date
     
     @staticmethod
+    def strtodatetime(dt):
+        date = datetime.datetime.strptime(dt, '%d-%m-%Y %H:%M');
+        return date
+
+    @staticmethod
     def strtodate(d):
         return datetime.datetime.strptime(d, '%d-%m-%Y').date()
 

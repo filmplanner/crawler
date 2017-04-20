@@ -14,7 +14,7 @@ class TheaterSpider(Spider):
 
     def parse_theater(self, res):
         obj = {
-            'id': SelectHelper.get(res, SELECTORS['THEATER_ID']),
+            'id': int(SelectHelper.get(res, SELECTORS['THEATER_ID'])),
             'name': SelectHelper.get(res, SELECTORS['THEATER_NAME']),
             'city': SelectHelper.get(res, SELECTORS['THEATER_CITY']),
             'image': SelectHelper.get(res, SELECTORS['THEATER_IMAGE']),
