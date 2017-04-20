@@ -3,7 +3,6 @@ SPIDER_MODULES = ['Pathe.spiders']
 NEWSPIDER_MODULE = 'Pathe.spiders'
 ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
-    'Pathe.pipelines.JsonExportPipeline': 301,
     'Pathe.pipelines.MongoDBPipeline': 300,
 }
 LOG_LEVEL = 'DEBUG'
@@ -21,9 +20,8 @@ MONGODB_COLLECTION_SHOW = "shows"
 BASE_URL = 'https://www.pathe.nl'
 
 THEATER_NAME = 'theater'
-THEATER_FILE = 'theater_items.json'
-
 WEEK_NAME = 'week'
+
 WEEK_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
 WEEK_CRAWL_START = 3 # Thursday
 WEEK_CRAWL_DAYS = 6 # Thursday -> Wednesday

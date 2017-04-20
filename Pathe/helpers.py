@@ -1,6 +1,36 @@
 import datetime
 import json
+from Pathe.settings import *
+import pymongo
 
+class SelectHelper(object):
+    @staticmethod
+    def get(res, selector):
+        return res.css(selector).extract_first()
+
+class MongoDBHelper(object):
+    
+    def __init__(self):
+        self.connection = pymongo.MongoClient(MONGODB_SERVER, MONGODB_PORT)
+        self.db = self.connection[MONGODB_DB]
+
+    def get(self, collection):
+        return self.db[collection].find()
+
+    def get_by(self, items, attr, val):
+        items.rewind()
+        for item in items:
+            if item[attr] == val:
+                return item            
+    
+    def get_attr(self, items, attr):
+        items.rewind()
+        for item in items:
+            yield item[attr]
+
+    def close(self):
+        self.connection.close()
+        
 class DateHelper(object):
     def __init__(self):
         pass
@@ -33,24 +63,3 @@ class DateHelper(object):
     @staticmethod
     def add_days(d, amount):
         return d + datetime.timedelta(days=amount)
-
-class DataHelper(object):
-    items = []
-
-    def __init__(self, file):
-        with open(file) as data:
-            self.items = json.load(data)
-    
-    def get(self, element):
-        for item in self.items:
-            yield item[element]
-
-    def search(self, element, search):
-        for item in self.items:
-            if item[element] == search:
-                return item
-        return None
-
-    def to_string(self, obj):
-        return ','.join(obj)
-        

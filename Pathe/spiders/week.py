@@ -1,27 +1,30 @@
 from scrapy import Spider, Request
 from Pathe.settings import *
 from Pathe.items import Movie, Show
-from Pathe.helpers import DateHelper, DataHelper
+from Pathe.helpers import SelectHelper, DateHelper, MongoDBHelper
 
 class WeekSpider(Spider):
     name = WEEK_NAME
-    theaters = []
 
     def start_requests(self):
         base_url = WEEK_URL
+        self.db_helper = MongoDBHelper()
+        self.theaters = self.db_helper.get("theaters")
         
-        # TODO: Read theaters from MongoDB instead of file
-        self.theaters = DataHelper(THEATER_FILE)
-        theater_ids = self.theaters.to_string(self.theaters.get('id'))
+        # get spider parameters
+        theater_ids = ','.join(self.db_helper.get_attr(self.theaters, 'id'))
         date = DateHelper.now()
+        
+        # get date flag from shell command
+        date_flag = getattr(self, 'start', None)
+        if date_flag is not None: 
+            date = DateHelper.strtodate(date_flag)
 
-        dateFlag = getattr(self, 'start', None)
-        if dateFlag is not None: 
-            date = DateHelper.strtodate(dateFlag)
-            
+        # get spider date range    
         start_date = DateHelper.next_weekday(date, WEEK_CRAWL_START)
         end_date = DateHelper.add_days(start_date, WEEK_CRAWL_DAYS)
 
+        # add requests from start to end date
         for date in DateHelper.daterange(start_date, end_date):
             # TODO: Add condition that checks if week is already scheduled
             if date >= DateHelper.now():
@@ -30,43 +33,44 @@ class WeekSpider(Spider):
                 request.meta['date'] = DateHelper.date(date)
                 yield request
 
-    def parse(self, response):
-        date = response.meta['date']
-        for movieItem in response.css(SELECTORS['MOVIE_LIST']):
-            movie = self.parse_movie(movieItem)
+        # close MongoDB connection
+        self.db_helper.close()
+
+    def parse(self, res):
+        date = res.meta['date']
+        for movie_item in res.css(SELECTORS['MOVIE_LIST']):
+            movie = self.parse_movie(movie_item)
             yield movie
 
-            for theaterItem in movieItem.css(SELECTORS['MOVIE_THEATER_LIST']):
-                theater = self.theaters.search('name', self.get(theaterItem, SELECTORS['MOVIE_THEATER_NAME']))
+            for theater_item in movie_item.css(SELECTORS['MOVIE_THEATER_LIST']):
+                theater = self.db_helper.get_by(self.theaters, 'name', SelectHelper.get(theater_item, SELECTORS['MOVIE_THEATER_NAME']))
 
-                for showItem in theaterItem.css(SELECTORS['SHOW_LIST']):
-                    show = self.parse_show(showItem, date, movie['id'], theater['id'])   
+                for show_item in theater_item.css(SELECTORS['SHOW_LIST']):
+                    show = self.parse_show(show_item, date, movie['id'], theater['id'])   
                     yield show     
 
-    def parse_movie(self, response):
-        url = response.css(SELECTORS['MOVIE_URL'])
+    def parse_movie(self, res):
+        url = res.css(SELECTORS['MOVIE_URL'])
         obj = {
             'id': url.re_first(r'[/]([0-9]{1,})[/]'),
-            'title': self.get(response, SELECTORS['MOVIE_TITLE']),
-            'description': self.get(response, SELECTORS['MOVIE_DESCRIPTION']), 
-            'image': self.get(response, SELECTORS['MOVIE_IMAGE']), 
+            'title': SelectHelper.get(res, SELECTORS['MOVIE_TITLE']),
+            'description': SelectHelper.get(res, SELECTORS['MOVIE_DESCRIPTION']), 
+            'image': SelectHelper.get(res, SELECTORS['MOVIE_IMAGE']), 
             'url': BASE_URL + url.extract_first(),    
         }    
         return Movie(obj)
 
-    def parse_show(self, response, date, movie_id, theater_id):
-        times = response.css(SELECTORS['SHOW_TIMES']).re(r'[0-9]{1,2}[:][0-9]{2}')
+    def parse_show(self, res, date, movie_id, theater_id):
+        times = res.css(SELECTORS['SHOW_TIMES']).re(r'[0-9]{1,2}[:][0-9]{2}')
         obj = {
             'date': date, 
             'movie_id': movie_id,
             'theater_id': theater_id,
             'start': times[0], 
             'end': times[1],
-            'type': self.get(response, SELECTORS['SHOW_TYPE']),
-            'url': BASE_URL + self.get(response, SELECTORS['SHOW_URL']),    
+            'type': SelectHelper.get(res, SELECTORS['SHOW_TYPE']),
+            'url': BASE_URL + SelectHelper.get(res, SELECTORS['SHOW_URL']),    
         }
         return Show(obj)
-
-    def get(self, response, selector):
-        return response.css(selector).extract_first()
+        
 

@@ -1,24 +1,22 @@
 from scrapy import Spider, Request
 from Pathe.settings import *
 from Pathe.items import Theater
+from Pathe.helpers import SelectHelper
 
 class TheaterSpider(Spider):
     name = THEATER_NAME
     start_urls = [BASE_URL]
 
-    def parse(self, response):
-        for item in response.css(SELECTORS['THEATER_LIST']):
-            url = self.get(item, SELECTORS['THEATER_HREF'])
+    def parse(self, res):
+        for item in res.css(SELECTORS['THEATER_LIST']):
+            url = SelectHelper.get(item, SELECTORS['THEATER_HREF'])
             yield Request(url, self.parse_theater)
 
-    def parse_theater(self, response):
+    def parse_theater(self, res):
         obj = {
-            'id': self.get(response, SELECTORS['THEATER_ID']),
-            'name': self.get(response, SELECTORS['THEATER_NAME']),
-            'city': self.get(response, SELECTORS['THEATER_CITY']),
-            'image': self.get(response, SELECTORS['THEATER_IMAGE']),
+            'id': SelectHelper.get(res, SELECTORS['THEATER_ID']),
+            'name': SelectHelper.get(res, SELECTORS['THEATER_NAME']),
+            'city': SelectHelper.get(res, SELECTORS['THEATER_CITY']),
+            'image': SelectHelper.get(res, SELECTORS['THEATER_IMAGE']),
         }
         return Theater(obj)
-
-    def get(self, response, selector):
-        return response.css(selector).extract_first()
