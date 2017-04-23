@@ -14,12 +14,12 @@ class MongoDBPipeline(object):
         self.collection_name = item.__class__.__name__.lower() + 's'
 
         if self.collection_name == MONGODB_COLLECTION_THEATER:
-            theaterExists = self.db_helper.db[self.collection_name].find({'id': item['id']}).count() > 0
+            theaterExists = self.db_helper.db[self.collection_name].find({'_id': item['_id']}).count() > 0
             if theaterExists:
                 return item
 
         if self.collection_name == MONGODB_COLLECTION_MOVIE:
-            movieExists = self.db_helper.db[self.collection_name].find({'id': item['id']}).count() > 0
+            movieExists = self.db_helper.db[self.collection_name].find({'_id': item['_id']}).count() > 0
             if movieExists:
                 return item
         

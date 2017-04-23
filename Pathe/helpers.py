@@ -1,5 +1,5 @@
 import datetime
-import json
+import time
 from Pathe.settings import *
 import pymongo
 
@@ -7,6 +7,10 @@ class SelectHelper(object):
     @staticmethod
     def get(res, selector):
         return res.css(selector).extract_first()
+
+    @staticmethod
+    def get_array(res, selector):
+        return res.css(selector).extract()
 
 class MongoDBHelper(object):
     
@@ -41,17 +45,20 @@ class DateHelper(object):
 
     @staticmethod
     def date(d):
-        date = d.strftime('%d-%m-%Y')
-        return date
+        return d.strftime('%d-%m-%Y')
     
     @staticmethod
     def strtodatetime(dt):
-        date = datetime.datetime.strptime(dt, '%d-%m-%Y %H:%M');
-        return date
+        return datetime.datetime.strptime(dt, '%d-%m-%Y')
 
     @staticmethod
     def strtodate(d):
         return datetime.datetime.strptime(d, '%d-%m-%Y').date()
+    
+    @staticmethod
+    def strtoseconds(t):
+        x = time.strptime(t, '%H:%M')
+        return int(datetime.timedelta(hours=x.tm_hour, minutes=x.tm_min).total_seconds())
 
     @staticmethod
     def daterange(start_date, end_date):
@@ -63,7 +70,7 @@ class DateHelper(object):
         days_diff = weekday - d.weekday()
         if days_diff <= 0:
             days_diff += 7
-        return d + datetime.timedelta(days_diff + 7)
+        return d + datetime.timedelta(days_diff)
     
     @staticmethod
     def prev_weekday(d, weekday):

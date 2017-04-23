@@ -41,6 +41,7 @@ SELECTORS = {
     'MOVIE_ID': '',
     'MOVIE_TITLE': '.schedule-default__figure a::attr(title)',
     'MOVIE_DESCRIPTION': '.schedule-default__synopsis p::text',
+    'MOVIE_ADVISORY': '.schedule-default__icons li img::attr(src)',
     'MOVIE_IMAGE': '.schedule-default__figure img::attr(src)',
     'MOVIE_URL': '.schedule-default__figure a::attr(href)',
     'MOVIE_THEATER_LIST': '.schedule-table tr',
@@ -48,6 +49,6 @@ SELECTORS = {
     # Show
     'SHOW_LIST': 'td form',
     'SHOW_TIMES': '.tooltip p',
-    'SHOW_TYPE': 'a span:nth-child(2)::text',
+    'SHOW_TYPE': 'a span:not(:first-child)::text',
     'SHOW_URL': '::attr(action)',  
 }

@@ -2,15 +2,16 @@ from scrapy import Item, Field
 
 
 class Theater(Item):
-    id = Field()
+    _id = Field()
     name = Field()
     city = Field()
     image = Field()
 
 class Movie(Item):
-    id = Field()
+    _id = Field()
     title = Field()
     description = Field()
+    advisory = Field()
     image = Field()
     url = Field()
 
