@@ -15,7 +15,7 @@ class SelectHelper(object):
 class MongoDBHelper(object):
     
     def __init__(self):
-        self.connection = pymongo.MongoClient(MONGODB_SERVER, MONGODB_PORT)
+        self.connection = pymongo.MongoClient(MONGODB_URI)
         self.db = self.connection[MONGODB_DB]
 
     def get(self, collection):
