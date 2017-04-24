@@ -12,7 +12,7 @@ LOG_LEVEL = 'DEBUG'
 DOWNLOAD_DELAY = 2
 
 ## MONGODB SETTINGS
-#MONGODB_URI = "mongodb://localhost:27017/"
+MONGODB_URI = "mongodb://localhost:27017/"
 MONGODB_DB = "pathe"
 MONGODB_COLLECTION_THEATER = "theaters"
 MONGODB_COLLECTION_MOVIE = "movies"
