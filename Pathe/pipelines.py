@@ -1,4 +1,3 @@
-from scrapy.exporters import JsonItemExporter
 from Pathe.settings import *
 from Pathe.helpers import MongoDBHelper
 
