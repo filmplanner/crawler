@@ -8,7 +8,7 @@ class WeekSpider(Spider):
 
     def start_requests(self):
         base_url = WEEK_URL
-        self.db_helper = MongoDBHelper()
+        self.db_helper = MongoDBHelper(self.db_uri)
         self.theaters = self.db_helper.get(MONGODB_COLLECTION_THEATER)
         
         # get theater ids

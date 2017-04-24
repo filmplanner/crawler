@@ -4,7 +4,7 @@ from Pathe.helpers import MongoDBHelper
 class MongoDBPipeline(object):
 
     def open_spider(self, spider):
-        self.db_helper = MongoDBHelper()
+        self.db_helper = MongoDBHelper(spider.crawler.settings.get('MONGODB_URI'))
 
     def close_spider(self, spider):
         self.db_helper.close()

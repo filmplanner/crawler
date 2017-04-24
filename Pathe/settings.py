@@ -2,6 +2,9 @@ BOT_NAME = 'Pathe'
 SPIDER_MODULES = ['Pathe.spiders']
 NEWSPIDER_MODULE = 'Pathe.spiders'
 ROBOTSTXT_OBEY = True
+DOWNLOADER_MIDDLEWARES = {
+    'Pathe.middlewares.PatheSpiderMiddleware': 1,
+}
 ITEM_PIPELINES = {
     'Pathe.pipelines.MongoDBPipeline': 300,
 }
