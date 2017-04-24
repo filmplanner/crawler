@@ -51,3 +51,8 @@ SELECTORS = {
     'SHOW_TYPE': 'a span:not(:first-child)::text',
     'SHOW_URL': '::attr(action)',  
 }
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
