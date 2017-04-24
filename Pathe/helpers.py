@@ -1,6 +1,7 @@
 import datetime
 import time
 from Pathe.settings import *
+from scrapy.utils.project import get_project_settings
 import pymongo
 
 class SelectHelper(object):
@@ -15,7 +16,8 @@ class SelectHelper(object):
 class MongoDBHelper(object):
     
     def __init__(self):
-        self.connection = pymongo.MongoClient(MONGODB_URI)
+        settings = get_project_settings()
+        self.connection = pymongo.MongoClient(settings.get('MONGODB_URI'))
         self.db = self.connection[MONGODB_DB]
 
     def get(self, collection):
