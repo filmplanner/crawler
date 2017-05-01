@@ -4,9 +4,11 @@ from Pathe.items import Movie, Show
 from Pathe.helpers import SelectHelper, DateHelper, MongoDBHelper
 
 class WeekSpider(Spider):
+    """Spider to crawl week schedule from Pathe.nl"""
     name = WEEK_NAME
 
     def start_requests(self):
+        """Initializes the URL's that need to be parsed"""
         base_url = WEEK_URL
         self.db_helper = MongoDBHelper(self.crawler.settings.get('MONGODB_URI'))
         self.theaters = self.db_helper.get(MONGODB_COLLECTION_THEATER)
@@ -32,6 +34,7 @@ class WeekSpider(Spider):
         self.db_helper.close()
 
     def parse(self, res):
+        """Parses result from crawled URLs"""
         date = res.meta['date']
         for movie_item in res.css(SELECTORS['MOVIE_LIST']):
             movie = self.parse_movie(movie_item)
@@ -45,6 +48,7 @@ class WeekSpider(Spider):
                     yield show
 
     def parse_movie(self, res):
+        """Parses result to create a Movie item from crawled URL"""
         url = res.css(SELECTORS['MOVIE_URL'])
         obj = {
             '_id': int(url.re_first(r'[/]([0-9]{1,})[/]')),
@@ -57,6 +61,7 @@ class WeekSpider(Spider):
         return Movie(obj)
 
     def parse_show(self, res, date, movie_id, theater_id):
+        """Parses result to create a Show item from crawled URL"""
         times = res.css(SELECTORS['SHOW_TIMES']).re(r'[0-9]{1,2}[:][0-9]{2}')
         obj = {
             'movie_id': movie_id,

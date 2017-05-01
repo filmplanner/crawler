@@ -1,5 +1,5 @@
-# pathe-crawler
-pathe-crawler is a crawler written in Python that retrieves theater, film and schedule data from Pathé. It uses Scrapy as its core library and stores all it's scraped data via a pipeline in a MongoDB database, which is used by the Pathé Planner application.
+#filmplanner/crawler
+filmplanner/crawler is a crawler written in Python that retrieves theater, film and schedule data from Pathé. It uses Scrapy as its core library and stores all it's scraped data via a pipeline in a MongoDB database, which is used by the Film Planner application.
 ## Usage
 **Crawl theaters**
 ``` bash

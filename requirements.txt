@@ -1,1 +1,2 @@
+Scrapy >= 1.3
 PyMongo >= 2.4
