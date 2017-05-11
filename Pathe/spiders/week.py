@@ -12,16 +12,16 @@ class WeekSpider(Spider):
         base_url = WEEK_URL
         self.db_helper = MongoDBHelper(self.crawler.settings.get('MONGODB_URI'))
         self.theaters = self.db_helper.get(MONGODB_COLLECTION_THEATER)
-        
+
         # get theater ids
         theater_ids = ','.join(str(x) for x in self.db_helper.get_attr(self.theaters, '_id'))
 
         # get crawl dates
         today = DateHelper.now()
-        update_date = DateHelper.prev_weekday(today, WEEK_CRAWL_UPDATE)           
+        update_date = DateHelper.prev_weekday(today, WEEK_CRAWL_UPDATE)
         start_date = DateHelper.next_weekday(update_date, WEEK_CRAWL_START)
-        end_date = DateHelper.add_days(start_date, WEEK_CRAWL_DAYS)        
-                
+        end_date = DateHelper.add_days(start_date, WEEK_CRAWL_DAYS)
+
         # add requests from start to end date
         self.logger.info("Scraping schedule from " + str(today) + " - " + str(end_date))
         for date in DateHelper.daterange(today, end_date):
@@ -53,11 +53,11 @@ class WeekSpider(Spider):
         obj = {
             '_id': int(url.re_first(r'[/]([0-9]{1,})[/]')),
             'title': SelectHelper.get(res, SELECTORS['MOVIE_TITLE']),
-            'description': SelectHelper.get(res, SELECTORS['MOVIE_DESCRIPTION']),
+            'description': SelectHelper.get(res, SELECTORS['MOVIE_DESCRIPTION'])[12:-10],
             'advisory': SelectHelper.get_array(res, SELECTORS['MOVIE_ADVISORY']),
             'image': SelectHelper.get(res, SELECTORS['MOVIE_IMAGE']),
-            'url': BASE_URL + url.extract_first(),    
-        }    
+            'url': BASE_URL + url.extract_first(),
+        }
         return Movie(obj)
 
     def parse_show(self, res, date, movie_id, theater_id):
@@ -73,5 +73,4 @@ class WeekSpider(Spider):
             'url': BASE_URL + SelectHelper.get(res, SELECTORS['SHOW_URL']),
         }
         return Show(obj)
-        
 

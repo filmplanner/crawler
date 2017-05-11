@@ -23,4 +23,3 @@ class Show(Item):
     end = Field()
     type = Field()
     url = Field()
-    
