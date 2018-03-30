@@ -1,19 +1,9 @@
-BOT_NAME = 'Pathe'
-SPIDER_MODULES = ['Pathe.spiders']
-NEWSPIDER_MODULE = 'Pathe.spiders'
+BOT_NAME = 'Filmplanner'
+SPIDER_MODULES = ['Filmplanner.spiders']
+NEWSPIDER_MODULE = 'Filmplanner.spiders'
 ROBOTSTXT_OBEY = True
-ITEM_PIPELINES = {
-    'Pathe.pipelines.MongoDBPipeline': 300,
-}
 LOG_LEVEL = 'DEBUG'
 DOWNLOAD_DELAY = 2
-
-## MONGODB SETTINGS
-MONGODB_URI = "mongodb://localhost:27017/"
-MONGODB_DB = "pathe"
-MONGODB_COLLECTION_THEATER = "theaters"
-MONGODB_COLLECTION_MOVIE = "movies"
-MONGODB_COLLECTION_SHOW = "shows"
 
 ## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'

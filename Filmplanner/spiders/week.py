@@ -1,7 +1,7 @@
 from scrapy import Spider, Request
-from Pathe.settings import *
-from Pathe.items import Movie, Show 
-from Pathe.helpers import SelectHelper, DateHelper, MongoDBHelper
+from Filmplanner.settings import *
+from Filmplanner.items import Movie, Show 
+from Filmplanner.helpers import SelectHelper, DateHelper, MongoDBHelper
 
 class WeekSpider(Spider):
     """Spider to crawl week schedule from Pathe.nl"""
@@ -51,7 +51,7 @@ class WeekSpider(Spider):
         """Parses result to create a Movie item from crawled URL"""
         url = res.css(SELECTORS['MOVIE_URL'])
         obj = {
-            '_id': int(url.re_first(r'[/]([0-9]{1,})[/]')),
+            'id': int(url.re_first(r'[/]([0-9]{1,})[/]')),
             'title': SelectHelper.get(res, SELECTORS['MOVIE_TITLE']),
             'description': SelectHelper.get(res, SELECTORS['MOVIE_DESCRIPTION'])[12:-10],
             'advisory': SelectHelper.get_array(res, SELECTORS['MOVIE_ADVISORY']),

@@ -2,13 +2,13 @@ from scrapy import Item, Field
 
 
 class Theater(Item):
-    _id = Field()
+    id = Field()
     name = Field()
     city = Field()
     image = Field()
 
 class Movie(Item):
-    _id = Field()
+    id = Field()
     title = Field()
     description = Field()
     advisory = Field()

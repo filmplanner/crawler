@@ -1,7 +1,7 @@
 from scrapy import Spider, Request
-from Pathe.settings import *
-from Pathe.items import Theater
-from Pathe.helpers import SelectHelper
+from Filmplanner.settings import *
+from Filmplanner.items import Theater
+from Filmplanner.helpers import SelectHelper
 
 class TheaterSpider(Spider):
     """Spider to crawl all theaters from Pathe.nl"""
@@ -17,7 +17,7 @@ class TheaterSpider(Spider):
     def parse_theater(self, res):
         """Parses result to create a Theater item from crawled URL"""
         obj = {
-            '_id': int(SelectHelper.get(res, SELECTORS['THEATER_ID'])),
+            'id': int(SelectHelper.get(res, SELECTORS['THEATER_ID'])),
             'name': SelectHelper.get(res, SELECTORS['THEATER_NAME']),
             'city': SelectHelper.get(res, SELECTORS['THEATER_CITY']),
             'image': SelectHelper.get(res, SELECTORS['THEATER_IMAGE']),
