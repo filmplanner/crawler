@@ -1,7 +1,6 @@
 import datetime
 import time
 from Filmplanner.settings import *
-import pymongo
 
 class SelectHelper(object):
     @staticmethod
