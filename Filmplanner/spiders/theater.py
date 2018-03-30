@@ -5,7 +5,7 @@ from Filmplanner.helpers import SelectHelper
 
 class TheaterSpider(Spider):
     """Spider to crawl all theaters from Pathe.nl"""
-    name = THEATER_NAME
+    name = 'theater'
     start_urls = [BASE_URL]
 
     def parse(self, res):

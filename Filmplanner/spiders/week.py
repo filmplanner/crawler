@@ -5,12 +5,12 @@ from Filmplanner.helpers import SelectHelper, DateHelper
 
 class WeekSpider(Spider):
     """Spider to crawl week schedule from Pathe.nl"""
-    name = WEEK_NAME
+    name = 'week'
 
     def start_requests(self):
         """Initializes the URL's that need to be parsed"""
         base_url = WEEK_URL
-        # TODO: get ids from a source.. temporary
+        # TODO: get ids from a source.. this is temporary
         self.theaters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
         # get theater ids

@@ -2,14 +2,14 @@ BOT_NAME = 'Filmplanner'
 SPIDER_MODULES = ['Filmplanner.spiders']
 NEWSPIDER_MODULE = 'Filmplanner.spiders'
 ROBOTSTXT_OBEY = True
+ITEM_PIPELINES = {		
+    'Filmplanner.pipelines.JsonPipeline': 300,		
+}
 LOG_LEVEL = 'DEBUG'
 DOWNLOAD_DELAY = 2
 
 ## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'
-
-THEATER_NAME = 'theater'
-WEEK_NAME = 'week'
 
 WEEK_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
 WEEK_CRAWL_UPDATE = 1 # Schedule update is on Monday
