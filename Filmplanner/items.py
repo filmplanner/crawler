@@ -1,6 +1,5 @@
 from scrapy import Item, Field
 
-
 class Theater(Item):
     id = Field()
     name = Field()

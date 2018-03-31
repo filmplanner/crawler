@@ -10,21 +10,20 @@ DOWNLOAD_DELAY = 2
 
 ## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'
-
 WEEK_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
-WEEK_CRAWL_UPDATE = 1 # Schedule update is on Monday
+WEEK_CRAWL_UPDATE = 1 # Pathe updates schedules on Monday
 WEEK_CRAWL_START = 3 # Thursday
 WEEK_CRAWL_DAYS = 6 # Thursday -> Wednesday
 
 # CSS SELECTORS
 SELECTORS = {
     # Theater
-    'THEATER_LIST': '.nav-primary__has-sub.js-main-menu-left:nth-child(2) ul li a[href*="bioscoop/"]',
+    'THEATER_LIST': '.nav-primary__item.nav-primary__item--has-sub:nth-child(2) ul li a[href*="bioscoop/"]',
     'THEATER_HREF': '::attr(href)',
-    'THEATER_ID': '.favoritebutton a:first-child::attr(data-cinema)',
+    'THEATER_ID': '.tabs-wrapper--schedule ul li:first-child a::attr(data-cinema-id)',
     'THEATER_NAME': '.visual-cinema__location::text',
     'THEATER_CITY': '.visual-cinema__city::text',
-    'THEATER_IMAGE': '#js-carousel-home .visual-home__item:first-child img::attr(src)',
+    'THEATER_IMAGE': '.visual-fullpage__slideshow .visual-fullpage__slide:first-child img::attr(src)',
     # Movie
     'MOVIE_LIST': '.schedule-default__item',
     'MOVIE_ID': '',

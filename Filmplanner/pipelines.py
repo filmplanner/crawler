@@ -3,7 +3,7 @@ import json
 class JsonPipeline(object):
 
     def open_spider(self, spider):
-        self.file = open('items.jl', 'w')
+        self.file = open(spider.name + ".json", 'w')
 
     def close_spider(self, spider):
         self.file.close()
