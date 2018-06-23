@@ -1,20 +1,20 @@
 from scrapy import Spider, Request
-from Pathe.settings import *
-from Pathe.items import Movie, Show 
-from Pathe.helpers import SelectHelper, DateHelper, MongoDBHelper
+from Filmplanner.settings import *
+from Filmplanner.items import Movie, Show 
+from Filmplanner.helpers import SelectHelper, DateHelper
 
 class WeekSpider(Spider):
     """Spider to crawl week schedule from Pathe.nl"""
-    name = WEEK_NAME
+    name = 'week'
 
     def start_requests(self):
         """Initializes the URL's that need to be parsed"""
         base_url = WEEK_URL
-        self.db_helper = MongoDBHelper(self.crawler.settings.get('MONGODB_URI'))
-        self.theaters = self.db_helper.get(MONGODB_COLLECTION_THEATER)
+        # TODO: get ids from a source.. this is temporary
+        self.theaters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
         # get theater ids
-        theater_ids = ','.join(str(x) for x in self.db_helper.get_attr(self.theaters, '_id'))
+        comma_seperated_theater_ids = ','.join(str(x) for x in self.theaters)
 
         # get crawl dates
         today = DateHelper.now()
@@ -25,13 +25,10 @@ class WeekSpider(Spider):
         # add requests from start to end date
         self.logger.info("Scraping schedule from " + str(today) + " - " + str(end_date))
         for date in DateHelper.daterange(today, end_date):
-            url = base_url + theater_ids + '/' + DateHelper.date(date)
+            url = base_url + comma_seperated_theater_ids + '/' + DateHelper.date(date)
             request = Request(url, self.parse)
             request.meta['date'] = DateHelper.date(date)
             yield request
-
-        # close MongoDB connection
-        self.db_helper.close()
 
     def parse(self, res):
         """Parses result from crawled URLs"""
@@ -44,14 +41,14 @@ class WeekSpider(Spider):
                 theater = self.db_helper.get_by(self.theaters, 'name', SelectHelper.get(theater_item, SELECTORS['MOVIE_THEATER_NAME']))
 
                 for show_item in theater_item.css(SELECTORS['SHOW_LIST']):
-                    show = self.parse_show(show_item, date, movie['_id'], theater['_id'])
+                    show = self.parse_show(show_item, date, movie['id'], theater['id'])
                     yield show
 
     def parse_movie(self, res):
         """Parses result to create a Movie item from crawled URL"""
         url = res.css(SELECTORS['MOVIE_URL'])
         obj = {
-            '_id': int(url.re_first(r'[/]([0-9]{1,})[/]')),
+            'id': int(url.re_first(r'[/]([0-9]{1,})[/]')),
             'title': SelectHelper.get(res, SELECTORS['MOVIE_TITLE']),
             'description': SelectHelper.get(res, SELECTORS['MOVIE_DESCRIPTION'])[12:-10],
             'advisory': SelectHelper.get_array(res, SELECTORS['MOVIE_ADVISORY']),

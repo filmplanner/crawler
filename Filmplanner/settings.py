@@ -1,40 +1,29 @@
-BOT_NAME = 'Pathe'
-SPIDER_MODULES = ['Pathe.spiders']
-NEWSPIDER_MODULE = 'Pathe.spiders'
+BOT_NAME = 'Filmplanner'
+SPIDER_MODULES = ['Filmplanner.spiders']
+NEWSPIDER_MODULE = 'Filmplanner.spiders'
 ROBOTSTXT_OBEY = True
-ITEM_PIPELINES = {
-    'Pathe.pipelines.MongoDBPipeline': 300,
+ITEM_PIPELINES = {		
+    'Filmplanner.pipelines.JsonPipeline': 300,		
 }
 LOG_LEVEL = 'DEBUG'
 DOWNLOAD_DELAY = 2
 
-## MONGODB SETTINGS
-MONGODB_URI = "mongodb://localhost:27017/"
-MONGODB_DB = "pathe"
-MONGODB_COLLECTION_THEATER = "theaters"
-MONGODB_COLLECTION_MOVIE = "movies"
-MONGODB_COLLECTION_SHOW = "shows"
-
 ## CUSTOM SETTINGS
 BASE_URL = 'https://www.pathe.nl'
-
-THEATER_NAME = 'theater'
-WEEK_NAME = 'week'
-
 WEEK_URL = 'https://www.pathe.nl/update-schedule/' # {theaterIds}/{date}
-WEEK_CRAWL_UPDATE = 1 # Schedule update is on Monday
+WEEK_CRAWL_UPDATE = 1 # Pathe updates schedules on Monday
 WEEK_CRAWL_START = 3 # Thursday
 WEEK_CRAWL_DAYS = 6 # Thursday -> Wednesday
 
 # CSS SELECTORS
 SELECTORS = {
     # Theater
-    'THEATER_LIST': '.nav-primary__has-sub.js-main-menu-left:nth-child(2) ul li a[href*="bioscoop/"]',
+    'THEATER_LIST': '.nav-primary__item.nav-primary__item--has-sub:nth-child(2) ul li a[href*="bioscoop/"]',
     'THEATER_HREF': '::attr(href)',
-    'THEATER_ID': '.favoritebutton a:first-child::attr(data-cinema)',
+    'THEATER_ID': '.tabs-wrapper--schedule ul li:first-child a::attr(data-cinema-id)',
     'THEATER_NAME': '.visual-cinema__location::text',
     'THEATER_CITY': '.visual-cinema__city::text',
-    'THEATER_IMAGE': '#js-carousel-home .visual-home__item:first-child img::attr(src)',
+    'THEATER_IMAGE': '.visual-fullpage__slideshow .visual-fullpage__slide:first-child img::attr(src)',
     # Movie
     'MOVIE_LIST': '.schedule-default__item',
     'MOVIE_ID': '',

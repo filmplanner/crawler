@@ -1,7 +1,6 @@
 import datetime
 import time
-from Pathe.settings import *
-import pymongo
+from Filmplanner.settings import *
 
 class SelectHelper(object):
     @staticmethod
@@ -16,28 +15,6 @@ class SelectHelper(object):
             stripped_item = "".join(item.split())
             result.append(stripped_item)
         return result
-
-class MongoDBHelper(object):
-    def __init__(self, db_uri):
-        self.connection = pymongo.MongoClient(db_uri)
-        self.db = self.connection[MONGODB_DB]
-
-    def get(self, collection):
-        return self.db[collection].find()
-
-    def get_by(self, items, attr, val):
-        items.rewind()
-        for item in items:
-            if item[attr] == val:
-                return item
-
-    def get_attr(self, items, attr):
-        items.rewind()
-        for item in items:
-            yield item[attr]
-
-    def close(self):
-        self.connection.close()
 
 class DateHelper(object):
     def __init__(self):
